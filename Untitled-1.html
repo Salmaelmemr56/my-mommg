@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>لماما، مع حبي</title>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #12332f;
+    --bg-deep: #0c2421;
+    --paper: #f8e6e4;
+    --ink: #3b1f26;
+    --rose: #c9586b;
+    --gold: #e9b44c;
+    --muted: #8a6a70;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font-family: "Tajawal", "Segoe UI", Tahoma, sans-serif;
+    color: var(--paper);
+    background: radial-gradient(ellipse at 50% 30%, var(--bg) 0%, var(--bg-deep) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+  main { width: 100%; max-width: 460px; text-align: center; }
+
+  .intro h1 {
+    font-family: "Aref Ruqaa", "Tajawal", serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .intro p { color: #cfe0dc; margin-bottom: 28px; }
+
+  .envelope {
+    position: relative;
+    display: block;
+    width: 280px;
+    height: 190px;
+    margin: 0 auto;
+    background: var(--rose);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    perspective: 800px;
+    font: inherit;
+  }
+  .envelope:focus-visible { outline: 3px solid var(--gold); outline-offset: 6px; }
+  .envelope .flap {
+    position: absolute; inset: 0 0 auto 0;
+    height: 105px;
+    background: #b44b5e;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    transition: transform .7s ease;
+    z-index: 3;
+  }
+  .envelope .front {
+    position: absolute; inset: 0;
+    background: var(--rose);
+    clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+    z-index: 2;
+  }
+  .envelope .seal {
+    position: absolute; top: 78px; left: 50%;
+    transform: translateX(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--gold); color: var(--ink);
+    display: grid; place-items: center;
+    font-size: 22px; z-index: 4;
+    transition: opacity .3s ease;
+  }
+  .envelope.open .flap { transform: rotateX(180deg); }
+  .envelope.open .seal { opacity: 0; }
+
+  .letter {
+    display: none;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 6px;
+    padding: 36px 28px 32px;
+    text-align: right;
+    box-shadow: 0 22px 50px rgba(0,0,0,.4);
+  }
+  .letter.show { display: block; animation: rise .7s ease both; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .letter h2 {
+    font-family: "Aref Ruqaa", "Tajawal", serif;
+    font-size: 2rem;
+    color: var(--rose);
+    margin-bottom: 14px;
+  }
+  .letter p { line-height: 2; font-size: 1.08rem; margin-bottom: 14px; }
+  .reasons {
+    list-style: none; padding: 0; margin: 20px 0 22px;
+    border-right: 3px solid var(--gold);
+    padding-right: 16px;
+  }
+  .reasons li { line-height: 1.9; margin-bottom: 4px; }
+  .sign { font-family: "Aref Ruqaa", "Tajawal", serif; font-size: 1.4rem; color: var(--rose); }
+  .sign small { display: block; font-family: "Tajawal", sans-serif; font-size: .9rem; color: var(--muted); margin-bottom: 2px; }
+
+  .hug {
+    margin-top: 24px;
+    width: 100%;
+    padding: 14px;
+    border: 0; border-radius: 6px;
+    background: var(--rose); color: #fff;
+    font: inherit; font-weight: 500; font-size: 1.05rem;
+    cursor: pointer;
+  }
+  .hug:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+  .hug-note { margin-top: 12px; min-height: 1.6em; color: var(--rose); font-weight: 500; }
+
+  .heart {
+    position: fixed; bottom: -30px;
+    font-size: 26px; pointer-events: none;
+    animation: float 3.2s ease-in forwards;
+  }
+  @keyframes float {
+    to { transform: translateY(-110vh) rotate(18deg); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .envelope .flap, .envelope .seal { transition: none; }
+    .letter.show { animation: none; }
+    .heart { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="intro" id="intro">
+    <h1>فيه جواب ليكي يا ماما</h1>
+    <p>اضغطي على الظرف عشان تفتحيه</p>
+    <button class="envelope" id="envelope" aria-label="افتحي الجواب">
+      <span class="flap"></span>
+      <span class="front"></span>
+      <span class="seal" aria-hidden="true">♥</span>
+    </button>
+  </section>
+
+  <article class="letter" id="letter">
+    <h2>يا ماما،</h2>
+    <p>بحبك. وعارف إني مش بقولها كفاية، فقلت أكتبهالك هنا عشان تفضل قدامك.</p>
+    <p>كل حاجة حلوة فيا ليها أصل عندك. أنتِ اللي علمتيني، وأنتِ اللي سندتيني، وأنتِ اللي دعيتيلي من غير ما أطلب.</p>
+    <ul class="reasons">
+      <li>بحبك عشان قلبك دايمًا واسع ليا.</li>
+      <li>بحبك عشان دعواتك هي اللي ماشيّاني.</li>
+      <li>بحبك عشان البيت بيبقى بيت لما تكوني فيه.</li>
+    </ul>
+    <p>ربنا يخليكي ليا ويديكي الصحة والسعادة اللي تستاهليها وأكتر.</p>
+    <div class="sign"><small>من اللي بيحبك أكتر من أي حاجة،</small><span id="name"></span></div>
+
+    <button class="hug" id="hug">ابعتي حضن</button>
+    <p class="hug-note" id="hugNote"></p>
+  </article>
+</main>
+
+<script>
+  // ✏️ اكتب اسمك هنا بين العلامتين
+  var YOUR_NAME = "اكتب اسمك هنا";
+  document.getElementById("name").textContent = YOUR_NAME;
+
+  var envelope = document.getElementById("envelope");
+  var intro = document.getElementById("intro");
+  var letter = document.getElementById("letter");
+
+  envelope.addEventListener("click", function () {
+    envelope.classList.add("open");
+    setTimeout(function () {
+      intro.style.display = "none";
+      letter.classList.add("show");
+    }, 750);
+  });
+
+  var count = 0;
+  var notes = ["وصلني الحضن 🤍", "وأنا كمان بحبك أوي", "حضن تاني؟ عيوني"];
+  document.getElementById("hug").addEventListener("click", function () {
+    document.getElementById("hugNote").textContent = notes[count % notes.length];
+    count++;
+    for (var i = 0; i < 12; i++) {
+      var h = document.createElement("span");
+      h.className = "heart";
+      h.textContent = "♥";
+      h.style.left = Math.random() * 95 + "vw";
+      h.style.color = i % 2 ? "#c9586b" : "#e9b44c";
+      h.style.animationDelay = Math.random() * 0.6 + "s";
+      document.body.appendChild(h);
+      setTimeout(function (el) { el.remove(); }, 4200, h);
+    }
+  });
+</script>
+</body>
+</html>
